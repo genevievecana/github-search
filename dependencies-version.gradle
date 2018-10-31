@@ -1,0 +1,39 @@
+ext.versions = [
+
+        //BUILD
+        'gradle'            :   '3.3.0-alpha10',
+        'minSdk'            :   19,
+        'targetSdk'         :   28,
+
+
+        //dependencies
+        'kotlin'            :   '1.2.71',
+        'appCompat'         :   '1.0.0-rc02',
+        'cardView'          :   '1.0.0',
+        'constraint'        :   '2.0.0-alpha2',
+        'androidMaterial'   :   '1.0.0',
+        'intuitAdjuster'    :   '1.0.6',
+        'glide'             :   '4.8.0',
+        'okHttp'            :   '3.11.0',
+        'retrofit'          :   '2.4.0',
+        'dagger'            :   '2.16',
+        'moshi'             :   '1.7.0',
+        'kotshi'            :   '1.0.5',
+        'androidXArchi'     :   '2.0.0',
+        'rxjava'            :   '2.2.2',
+        'rxandroid'         :   '2.0.2',
+        'rxkotlin'          :   '2.3.0',
+
+
+
+        //testing
+        'junit'             :   '4.12',
+        'mockito'           :   '2.22.0',
+        'androidXTest'      :   '1.0.0',
+        'googleTruth'       :   '0.42',
+        'testRunner'        :   '1.1.0',
+        'espresso'          :   '3.1.0-alpha4',
+        'barista'           :   '2.7.0'
+
+
+]
