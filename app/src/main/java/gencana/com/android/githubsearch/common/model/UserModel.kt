@@ -12,4 +12,7 @@ data class UserModel(
     override fun getViewType(): Int
             = ViewHolderEnum.ITEM_USER.viewType
 
+    override fun toString(): String {
+        return username
+    }
 }

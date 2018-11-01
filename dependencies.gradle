@@ -59,6 +59,11 @@ ext{
         implementation "androidx.lifecycle:lifecycle-reactivestreams:$versions.androidXArchi"
     }
 
+    paging = Group {
+        implementation "androidx.paging:paging-runtime:$versions.paging"
+        implementation "androidx.paging:paging-common:$versions.paging"
+    }
+
     rxjava = Group {
         implementation "io.reactivex.rxjava2:rxjava:$versions.rxjava"
         implementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
@@ -90,6 +95,7 @@ ext{
         moshi()
         kotshi()
         lifecycle()
+        paging()
         rxjava()
     }
 

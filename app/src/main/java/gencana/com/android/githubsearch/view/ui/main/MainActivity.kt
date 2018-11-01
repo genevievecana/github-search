@@ -3,6 +3,7 @@ package gencana.com.android.githubsearch.view.ui.main
 import android.os.Bundle
 import android.widget.Toast
 import gencana.com.android.githubsearch.R
+import gencana.com.android.githubsearch.common.extensions.addObserver
 import gencana.com.android.githubsearch.common.extensions.defaultMultiAdapter
 import gencana.com.android.githubsearch.common.model.PagingListModel
 import gencana.com.android.githubsearch.common.model.SearchParams
@@ -15,12 +16,25 @@ class MainActivity : BaseActivity<MainViewModel, PagingListModel<UserModel>>() {
 
     private lateinit var recyclerMultiAdapter: RecyclerMultiAdapter<UserModel>
 
+    private val defaultParams = SearchParams("gen", 1)
+
     override val layout: Int
         get() = R.layout.activity_main
 
     override fun setupActivity(savedInstanceState: Bundle?) {
         recyclerMultiAdapter = recycler_main.defaultMultiAdapter()
-        viewModel.execute(SearchParams("gen", 1))
+
+        search(defaultParams)
+    }
+
+    private fun search(searchParams: SearchParams){
+        if (searchParams.query.isEmpty()){
+            onError("Search is empty!")
+            return
+        }
+
+        viewModel.itemPagedList(searchParams)
+                .addObserver(this) {  recyclerMultiAdapter.submitList(it)}
     }
 
     override fun showLoading(show: Boolean) {
@@ -28,7 +42,7 @@ class MainActivity : BaseActivity<MainViewModel, PagingListModel<UserModel>>() {
     }
 
     override fun onResponseSuccess(data: PagingListModel<UserModel>) {
-        recyclerMultiAdapter.addItems(data.data)
+
     }
 
     override fun onError(errorMsg: String?) {

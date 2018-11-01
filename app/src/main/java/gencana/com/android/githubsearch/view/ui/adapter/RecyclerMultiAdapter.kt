@@ -3,7 +3,10 @@ package gencana.com.android.githubsearch.view.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import gencana.com.android.githubsearch.data.remote.paging.getDiffCallback
+
 import gencana.com.android.githubsearch.view.ui.adapter.viewholder.creator.ViewHolderEnum
 import gencana.com.android.githubsearch.view.ui.adapter.viewholder.creator.ViewHolderInterface
 import io.reactivex.Observable
@@ -13,14 +16,12 @@ import io.reactivex.subjects.PublishSubject
 class RecyclerMultiAdapter<E: ViewHolderInterface>(
         private val itemList: MutableList<E>,
         hasClickListener: Boolean = true
-) : RecyclerView.Adapter<RecyclerMultiAdapter.BaseViewHolder<E>>() {
+)  : PagedListAdapter<E, RecyclerMultiAdapter.BaseViewHolder<E>>(getDiffCallback<E>()) {
+
 
     private val itemClickPublisher: PublishSubject<E>?
             = if (hasClickListener) PublishSubject.create() else null
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
 
     @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<E> {
@@ -33,7 +34,7 @@ class RecyclerMultiAdapter<E: ViewHolderInterface>(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<E>, position: Int) {
-        holder.onBind(itemList[position], itemClickPublisher)
+        getItem(position)?.let {holder.onBind(it, itemClickPublisher)}
     }
 
     internal inline fun <reified R>getClickObservable(): Observable<R>?{
@@ -43,25 +44,7 @@ class RecyclerMultiAdapter<E: ViewHolderInterface>(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return itemList[position].getViewType()
-    }
-
-    //TODO: replace paging
-    fun addItem(item: E, isClear: Boolean = true){
-        if (isClear) {
-            itemList.clear()
-        }
-        itemList.add(item)
-        notifyDataSetChanged()
-    }
-
-    //TODO: replace paging
-    fun addItems(items: List<E>, isClear: Boolean = true){
-        if (isClear) {
-            itemList.clear()
-        }
-        itemList.addAll(items)
-        notifyDataSetChanged()
+        return getItem(position)?.getViewType() ?: 0
     }
 
     abstract class BaseViewHolder<E : ViewHolderInterface>(itemView: View) : RecyclerView.ViewHolder(itemView) {
