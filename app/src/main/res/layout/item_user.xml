@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.MaterialComponents.CardView"
+    android:layout_marginBottom="@dimen/small"
+    app:contentPadding="@dimen/small"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/text_subitem"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_username"
+            style="@style/Text.Item"
+            android:layout_width="0dp"
+            android:maxLines="6"
+            android:layout_marginStart="@dimen/small"
+            app:layout_constraintTop_toTopOf="@id/img_avatar"
+            app:layout_constraintStart_toEndOf="@id/img_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Username"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_rating"
+            style="@style/Text.SubItem"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/rating_size"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/txt_username"
+            app:layout_constraintStart_toStartOf="@id/txt_username"
+            tools:text="Rating"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

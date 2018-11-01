@@ -1,14 +1,16 @@
 package gencana.com.android.githubsearch.view.ui.adapter.viewholder.creator
 
 import android.view.View
+import gencana.com.android.githubsearch.R
 import gencana.com.android.githubsearch.view.ui.adapter.RecyclerMultiAdapter
+import gencana.com.android.githubsearch.view.ui.adapter.viewholder.UserViewHolder
 
 
 enum class ViewHolderEnum(val viewType: Int,
                           val layout: Int,
                           val viewHolder: (view: View) -> RecyclerMultiAdapter.BaseViewHolder<*>) {
 
-    ;
+    ITEM_USER(0, R.layout.item_user, { view: View -> UserViewHolder(view) });
 
     companion object {
 
