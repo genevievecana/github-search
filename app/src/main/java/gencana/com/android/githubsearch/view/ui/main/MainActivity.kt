@@ -1,7 +1,9 @@
 package gencana.com.android.githubsearch.view.ui.main
 
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import gencana.com.android.githubsearch.R
 import gencana.com.android.githubsearch.common.extensions.addObserver
 import gencana.com.android.githubsearch.common.extensions.defaultMultiAdapter
@@ -48,4 +50,35 @@ class MainActivity : BaseActivity<MainViewModel, PagingListModel<UserModel>>() {
     override fun onError(errorMsg: String?) {
         Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        setupSearch(menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setupSearch(menu: Menu?){
+        menu?.apply {
+            (findItem(R.id.action_search).actionView as SearchView).apply {
+                swipe_refresh_main.setOnRefreshListener {
+                    search(
+                            if (this.query.toString().isEmpty()) defaultParams
+                            else SearchParams(this.query.toString()  , 1)
+                    )
+                }
+                maxWidth = Integer.MAX_VALUE
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        return true
+                    }
+
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        search(SearchParams(query!!, 1))
+                        return false
+                    }
+
+                })
+            } }
+    }
+
 }

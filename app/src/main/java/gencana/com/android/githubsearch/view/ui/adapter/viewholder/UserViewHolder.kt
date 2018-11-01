@@ -13,7 +13,7 @@ class UserViewHolder(view: View): RecyclerMultiAdapter.BaseViewHolder<UserModel>
 
         Glide.with(itemView).load(data.avatarUrl).into(itemView.img_avatar)  //TODO: circle image
         itemView.txt_username.text = data.username
-        itemView.txt_rating.text = data.score.toString() //TODO
+        itemView.txt_rating.text = data.score.toInt().toString() //TODO
 
     }
 }

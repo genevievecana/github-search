@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Widget.MaterialComponents.CardView"
-    android:layout_marginBottom="@dimen/small"
+    android:layout_marginBottom="@dimen/xsmall"
     app:contentPadding="@dimen/small"
     >
 
@@ -40,6 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/rating_size"
             android:gravity="center_vertical"
+            android:drawableStart="@drawable/ic_star_border"
+            android:drawablePadding="@dimen/xsmall"
+            android:layout_marginTop="@dimen/_2sdp"
             app:layout_constraintTop_toBottomOf="@id/txt_username"
             app:layout_constraintStart_toStartOf="@id/txt_username"
             tools:text="Rating"
