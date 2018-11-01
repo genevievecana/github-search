@@ -6,7 +6,6 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import gencana.com.android.githubsearch.di.modules.NetworkModule
-import gencana.com.android.githubsearch.di.modules.RepositoryModule
 import gencana.com.android.githubsearch.di.modules.ActivitiesBindingModule
 import gencana.com.android.githubsearch.di.modules.AppModule
 import gencana.com.android.githubsearch.di.modules.MockModule
@@ -20,7 +19,6 @@ import javax.inject.Singleton
     AppModule::class,
     ActivitiesBindingModule::class,
     NetworkModule::class,
-    RepositoryModule::class,
     MockModule::class
 ])
 

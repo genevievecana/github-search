@@ -6,6 +6,7 @@ import gencana.com.android.githubsearch.common.extensions.addErrorHandler
 import gencana.com.android.githubsearch.common.model.Result
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.disposables.CompositeDisposable
 
@@ -28,7 +29,8 @@ abstract class BaseViewModel<T, Params>(private val io: Scheduler) : ViewModel()
         addDisposable(single
                 .doOnSubscribe{loadingLiveData.postValue(true)}
                 .doAfterTerminate{loadingLiveData.postValue(false)}
-                .observeOn(io)
+                .subscribeOn(io)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     if (result.hasError()) errorLiveData.postValue(result.error)
                     else responseLiveData.postValue(result.data)

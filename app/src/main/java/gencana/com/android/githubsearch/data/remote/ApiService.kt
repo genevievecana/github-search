@@ -10,5 +10,8 @@ import retrofit2.http.Query
 interface ApiService{
 
     @GET(ENDPOINT_SEARCH)
-    fun searchUsers(@Query("q")query: String, page: Int = 1): Single<PagingList<UserData>>
+    fun searchUsers(
+            @Query("q")query: String,
+            @Query("page") page: Int = 1
+    ): Single<PagingList<UserData>>
 }

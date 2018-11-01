@@ -6,7 +6,6 @@ import dagger.Provides
 import gencana.com.android.githubsearch.data.remote.adapter.ApplicationJsonAdapterFactory
 import gencana.com.android.githubsearch.BuildConfig
 import gencana.com.android.githubsearch.data.remote.ApiService
-import io.reactivex.Scheduler
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
@@ -34,9 +33,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun providesAdapterFactory(io: Scheduler)
-            : RxJava2CallAdapterFactory
-            = RxJava2CallAdapterFactory.createWithScheduler(io)
+    fun providesAdapterFactory(): RxJava2CallAdapterFactory
+            = RxJava2CallAdapterFactory.create()
 
     @Provides
     @Singleton
@@ -57,7 +55,8 @@ class NetworkModule {
             rxJava2CallAdapterFactory: RxJava2CallAdapterFactory,
             okHttpClient: OkHttpClient
     ): Retrofit
-            = Retrofit.Builder().baseUrl(BuildConfig.API_BASE_URL)
+            = Retrofit.Builder()
+            .baseUrl(BuildConfig.API_BASE_URL)
             .addConverterFactory(converterFactory)
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
             .client(okHttpClient)
