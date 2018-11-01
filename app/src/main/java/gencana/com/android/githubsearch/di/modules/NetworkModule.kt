@@ -57,7 +57,7 @@ class NetworkModule {
             rxJava2CallAdapterFactory: RxJava2CallAdapterFactory,
             okHttpClient: OkHttpClient
     ): Retrofit
-            = Retrofit.Builder().baseUrl("")//TODO: add base url
+            = Retrofit.Builder().baseUrl(BuildConfig.API_BASE_URL)
             .addConverterFactory(converterFactory)
             .addCallAdapterFactory(rxJava2CallAdapterFactory)
             .client(okHttpClient)
