@@ -12,8 +12,11 @@ import io.reactivex.subjects.PublishSubject
 
 class RecyclerMultiAdapter<E: ViewHolderInterface>(
         private val itemList: MutableList<E>,
-        private val itemClickPublisher: PublishSubject<E>?
+        hasClickListener: Boolean = true
 ) : RecyclerView.Adapter<RecyclerMultiAdapter.BaseViewHolder<E>>() {
+
+    private val itemClickPublisher: PublishSubject<E>?
+            = if (hasClickListener) PublishSubject.create() else null
 
     override fun getItemCount(): Int {
         return itemList.size
