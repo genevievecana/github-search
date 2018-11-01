@@ -44,7 +44,7 @@ class ItemDataSource<T: PagingListModel<M>, M>(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            val key = if (it.totalCount > pageSize*params.key) params.key + 1 else null
+                            val key = if (it.totalCount > (pageSize+1)*params.key) params.key + 1 else null
                             callback.onResult(it.data!!, key)
                         },
                         {
