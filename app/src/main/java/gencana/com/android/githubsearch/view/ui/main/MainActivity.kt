@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.paging.PagedList
 import gencana.com.android.githubsearch.R
-import gencana.com.android.githubsearch.common.extensions.addObserver
 import gencana.com.android.githubsearch.common.extensions.defaultMultiAdapter
 import gencana.com.android.githubsearch.common.model.PagingListModel
 import gencana.com.android.githubsearch.common.model.SearchParams
@@ -14,7 +14,7 @@ import gencana.com.android.githubsearch.view.ui.adapter.RecyclerMultiAdapter
 import gencana.com.android.githubsearch.view.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<MainViewModel, PagingListModel<UserModel>>() {
+class MainActivity : BaseActivity<MainViewModel, PagingListModel<UserModel>, PagedList<UserModel>>() {
 
     private lateinit var recyclerMultiAdapter: RecyclerMultiAdapter<UserModel>
 
@@ -35,16 +35,15 @@ class MainActivity : BaseActivity<MainViewModel, PagingListModel<UserModel>>() {
             return
         }
 
-        viewModel.itemPagedList(searchParams)
-                .addObserver(this) {  recyclerMultiAdapter.submitList(it)}
+        viewModel.executePaging(searchParams)
     }
 
     override fun showLoading(show: Boolean) {
         swipe_refresh_main.isRefreshing = show
     }
 
-    override fun onResponseSuccess(data: PagingListModel<UserModel>) {
-
+    override fun onResponseSuccess(data: PagedList<UserModel>) {
+        recyclerMultiAdapter.submitList(data)
     }
 
     override fun onError(errorMsg: String?) {

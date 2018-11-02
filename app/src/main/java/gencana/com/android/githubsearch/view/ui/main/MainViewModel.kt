@@ -1,40 +1,28 @@
 package gencana.com.android.githubsearch.view.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.paging.PagedList
 import gencana.com.android.githubsearch.common.model.PagingListModel
 import gencana.com.android.githubsearch.common.model.SearchParams
 import gencana.com.android.githubsearch.common.model.UserModel
-import gencana.com.android.githubsearch.data.remote.paging.getPagingLiveData
 import gencana.com.android.githubsearch.interactor.UserInteractor
-import gencana.com.android.githubsearch.view.ui.base.BaseViewModel
+import gencana.com.android.githubsearch.view.ui.base.BasePagingViewModel
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import javax.inject.Inject
 
 
 class MainViewModel @Inject constructor(
-        private val airportListDetailsInteractor: UserInteractor,
-        private val io: Scheduler
-): BaseViewModel<PagingListModel<UserModel>, SearchParams>(io) {
+        private val userInteractor: UserInteractor,
+        io: Scheduler
+): BasePagingViewModel<PagingListModel<UserModel>, UserModel, SearchParams>(io) {
 
-    override fun getObservable(params: SearchParams): Observable<PagingListModel<UserModel>> {
-        return airportListDetailsInteractor
-                .getObservable(params)
-                .toObservable()
+    override fun getObservable(params: SearchParams): Observable<PagingListModel<UserModel>>
+            = userInteractor.getObservable(params).toObservable()
 
+    override fun getPagedObservable(params: SearchParams): (page: Int) -> Observable<PagingListModel<UserModel>>{
+        return { page: Int ->
+            params.page = page
+            getObservable(params)
+        }
     }
-
-    fun itemPagedList(params: SearchParams): LiveData<PagedList<UserModel>>
-            = getPagingLiveData(
-                    compositeDisposable,
-                    io,
-                    loadingLiveData,
-                    errorLiveData,
-                    { page: Int ->
-                            params.page = page
-                    getObservable(params)
-                    })
-
 
 }

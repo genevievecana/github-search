@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import dagger.android.AndroidInjection
 import gencana.com.android.githubsearch.common.extensions.addObserver
+import gencana.com.android.githubsearch.common.model.ResultEvent
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
 
-abstract class BaseActivity<VM: BaseViewModel<T, *>, T>: AppCompatActivity() {
+abstract class BaseActivity<VM: BaseViewModel<T, *>, T, R>: AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -19,7 +20,7 @@ abstract class BaseActivity<VM: BaseViewModel<T, *>, T>: AppCompatActivity() {
 
     protected abstract fun setupActivity(savedInstanceState: Bundle?)
     protected abstract fun showLoading(show: Boolean)
-    abstract fun onResponseSuccess(data: T)
+    abstract fun onResponseSuccess(data: R)
     abstract fun onError(errorMsg: String?)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +33,32 @@ abstract class BaseActivity<VM: BaseViewModel<T, *>, T>: AppCompatActivity() {
         setupActivity(savedInstanceState)
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun observeLiveData() {
-        viewModel.responseLiveData.addObserver(this) { t: T -> onResponseSuccess(t)}
-        viewModel.errorLiveData.addObserver(this) { t: String ->  onError(t)}
-        viewModel.loadingLiveData.addObserver(this) { t: Boolean -> showLoading(t)}
+        viewModel.resultStateLiveData.addObserver(this) {
+            it. apply {
+                when(this){
+                    is ResultEvent.OnStart -> onRequestStarted(isPaging)
+                    is ResultEvent.OnFinish -> onRequestFinished(isPaging)
+                    is ResultEvent.OnSuccess<*> -> onResponseSuccess(data as R)
+                    is ResultEvent.OnError -> onError(throwable.message)
+                    is ResultEvent.OnExpectedError -> onError(errorEnum.errorMessage)
+                }
+            }
+
+        }
 
     }
+
+    protected open fun onRequestStarted(isPaging: Boolean){
+        if (!isPaging)
+            showLoading(true)
+
+    }
+
+    protected open fun onRequestFinished(isPaging: Boolean){
+        if (!isPaging)
+            showLoading(false)
+    }
+
 }

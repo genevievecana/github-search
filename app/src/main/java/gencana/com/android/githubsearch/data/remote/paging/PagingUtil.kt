@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import gencana.com.android.githubsearch.common.model.PagingListModel
+import gencana.com.android.githubsearch.common.model.ResultEvent
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -12,13 +13,12 @@ import io.reactivex.disposables.CompositeDisposable
 fun<T: PagingListModel<M>, M> getPagingLiveData(
         compositeDisposable: CompositeDisposable,
         io: Scheduler,
-        loadingLiveData: MutableLiveData<Boolean>,
-        errorLiveData: MutableLiveData<String>,
+        liveDataResponseEvent: MutableLiveData<ResultEvent>,
         pageObservable: (page: Int) -> Observable<T>,
         pageSize: Int = 30)
         : LiveData<PagedList<M>>{
     val itemDataSourceFactory
-            = ItemDataSourceFactory(pageObservable, io, compositeDisposable, loadingLiveData, errorLiveData)
+            = ItemDataSourceFactory(pageObservable, io, compositeDisposable, liveDataResponseEvent)
     return LivePagedListBuilder(itemDataSourceFactory, getDefaultPageListConfiguration(pageSize))
             .build()
 }

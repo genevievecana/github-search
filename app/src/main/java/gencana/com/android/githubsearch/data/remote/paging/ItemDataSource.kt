@@ -2,7 +2,9 @@ package gencana.com.android.githubsearch.data.remote.paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import gencana.com.android.githubsearch.common.extensions.switchMapError
 import gencana.com.android.githubsearch.common.model.PagingListModel
+import gencana.com.android.githubsearch.common.model.ResultEvent
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,24 +14,25 @@ class ItemDataSource<T: PagingListModel<M>, M>(
         private val pageObservable: (page: Int) -> Observable<T>,
         private val io: Scheduler,
         private val compositeDisposable: CompositeDisposable,
-        private val loadingLiveData: MutableLiveData<Boolean>,
-        private val errorLiveData: MutableLiveData<String>,
+        private val liveDataResponseEvent: MutableLiveData<ResultEvent>,
         private val pageSize: Int = 30)
     : PageKeyedDataSource<Int, M>() {
 
+    @Suppress("UNCHECKED_CAST")
     override fun loadInitial(params: PageKeyedDataSource.LoadInitialParams<Int>, callback: PageKeyedDataSource.LoadInitialCallback<Int, M>) {
-        pageObservable(1)
+        switchMapError(pageObservable(1))
+                .doOnSubscribe{liveDataResponseEvent.postValue(ResultEvent.OnStart())}
                 .subscribeOn(io)
-                .doOnSubscribe{loadingLiveData.postValue(true)}
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {response ->
-                            loadingLiveData.postValue(false)
-                            callback.onResult(response.data!!, null, 2)
+                            response as ResultEvent.OnSuccess<PagingListModel<M>>
+                            liveDataResponseEvent.value = ResultEvent.OnFinish()
+                            callback.onResult(response.data.data, null, 2)
                         },
                         {
-                            loadingLiveData.postValue(false)
-                            errorLiveData.postValue(it.message)
+                            liveDataResponseEvent.value = ResultEvent.OnFinish()
+                            liveDataResponseEvent.value = ResultEvent.OnError(it)
                         })
                 ?.let { compositeDisposable.add(it) }
     }
@@ -38,17 +41,22 @@ class ItemDataSource<T: PagingListModel<M>, M>(
 
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun loadAfter(params: PageKeyedDataSource.LoadParams<Int>, callback: PageKeyedDataSource.LoadCallback<Int, M>) {
-        pageObservable(params.key)
+        switchMapError(pageObservable(params.key))
+                .doOnSubscribe{liveDataResponseEvent.postValue(ResultEvent.OnStart(true))}
                 .subscribeOn(io)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            val key = if (it.totalCount > (pageSize+1)*params.key) params.key + 1 else null
-                            callback.onResult(it.data!!, key)
+                            it as ResultEvent.OnSuccess<PagingListModel<M>>
+                            liveDataResponseEvent.value = ResultEvent.OnFinish(true)
+                            val key = if (it.data.totalCount > (pageSize+1)*params.key) params.key + 1 else null
+                            callback.onResult(it.data.data, key)
                         },
                         {
-                            errorLiveData.postValue(it.message)
+                            liveDataResponseEvent.value = ResultEvent.OnFinish(true)
+                            liveDataResponseEvent.value = ResultEvent.OnError(it)
                         })
                 ?.let { compositeDisposable.add(it) }
     }
