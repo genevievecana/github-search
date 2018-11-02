@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Github Search</string>
+
+    <string name="error_default">Oops! Something went wrong.</string>
+    <string name="error_empty">No data!</string>
+    <string name="error_empty_initial">No data yet! Enter keyword to get started.</string>
+    <string name="error_empty_query">Enter a valid search.</string>
+    <string name="error_empty_results">No matched data! Try another keyword.</string>
 </resources>

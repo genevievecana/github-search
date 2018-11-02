@@ -41,6 +41,7 @@ abstract class BaseActivity<VM: BaseViewModel<T, *>, T, R>: AppCompatActivity() 
                     is ResultEvent.OnStart -> onRequestStarted(isPaging)
                     is ResultEvent.OnFinish -> onRequestFinished(isPaging)
                     is ResultEvent.OnSuccess<*> -> onResponseSuccess(data as R)
+                    ResultEvent.OnEmptyResults -> onSuccessEmptyResults()
                     is ResultEvent.OnError -> onError(throwable.message)
                     is ResultEvent.OnExpectedError -> onError(errorEnum.errorMessage)
                 }
@@ -59,6 +60,10 @@ abstract class BaseActivity<VM: BaseViewModel<T, *>, T, R>: AppCompatActivity() 
     protected open fun onRequestFinished(isPaging: Boolean){
         if (!isPaging)
             showLoading(false)
+    }
+
+    protected open fun onSuccessEmptyResults(){
+
     }
 
 }

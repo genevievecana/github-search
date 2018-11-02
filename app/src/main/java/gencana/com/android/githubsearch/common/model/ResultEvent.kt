@@ -5,6 +5,8 @@ sealed class ResultEvent{
 
     data class OnSuccess<T>(val data: T) : ResultEvent()
 
+    object OnEmptyResults : ResultEvent()
+
     data class OnStart(val isPaging: Boolean = false) : ResultEvent()
 
     data class  OnFinish(val isPaging: Boolean = false) : ResultEvent()

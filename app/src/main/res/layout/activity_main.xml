@@ -21,4 +21,10 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <gencana.com.android.githubsearch.view.custom.PlaceHolderView
+        android:id="@+id/placeholder_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

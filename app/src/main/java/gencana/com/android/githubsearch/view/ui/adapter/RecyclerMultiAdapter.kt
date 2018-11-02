@@ -14,7 +14,6 @@ import io.reactivex.subjects.PublishSubject
 
 
 class RecyclerMultiAdapter<E: ViewHolderInterface>(
-        private val itemList: MutableList<E>,
         hasClickListener: Boolean = true
 )  : PagedListAdapter<E, RecyclerMultiAdapter.BaseViewHolder<E>>(getDiffCallback<E>()) {
 

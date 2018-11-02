@@ -28,7 +28,10 @@ class ItemDataSource<T: PagingListModel<M>, M>(
                         {response ->
                             response as ResultEvent.OnSuccess<PagingListModel<M>>
                             liveDataResponseEvent.value = ResultEvent.OnFinish()
-                            callback.onResult(response.data.data, null, 2)
+                            response.data.data.apply {
+                                if (isEmpty()) liveDataResponseEvent.value = ResultEvent.OnEmptyResults
+                                else callback.onResult(response.data.data, null, 2)
+                            }
                         },
                         {
                             liveDataResponseEvent.value = ResultEvent.OnFinish()
