@@ -2,8 +2,7 @@ package gencana.com.android.githubsearch.data.entity
 
 import com.squareup.moshi.Json
 import gencana.com.android.githubsearch.common.model.PagingListModel
-import gencana.com.android.githubsearch.common.model.UserModel
-import gencana.com.android.githubsearch.data.remote.paging.PagingData
+import gencana.com.android.githubsearch.view.adapter.paging.PagingData
 import se.ansman.kotshi.JsonSerializable
 
 @JsonSerializable

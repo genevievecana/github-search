@@ -1,10 +1,9 @@
-package gencana.com.android.githubsearch.view.ui.adapter.viewholder
+package gencana.com.android.githubsearch.view.adapter.viewholder
 
 import android.view.View
-import com.bumptech.glide.Glide
 import gencana.com.android.githubsearch.common.application.GlideApp
 import gencana.com.android.githubsearch.common.model.UserModel
-import gencana.com.android.githubsearch.view.ui.adapter.RecyclerMultiAdapter
+import gencana.com.android.githubsearch.view.adapter.RecyclerMultiAdapter
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_user.view.*
 

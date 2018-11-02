@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import gencana.com.android.githubsearch.common.model.PagingListModel
 import gencana.com.android.githubsearch.common.model.ResultEvent
-import gencana.com.android.githubsearch.data.remote.paging.getPagingLiveData
+import gencana.com.android.githubsearch.view.adapter.paging.getPagingLiveData
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 

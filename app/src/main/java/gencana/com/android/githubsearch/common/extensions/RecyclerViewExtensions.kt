@@ -2,8 +2,8 @@ package gencana.com.android.githubsearch.common.extensions
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import gencana.com.android.githubsearch.view.ui.adapter.RecyclerMultiAdapter
-import gencana.com.android.githubsearch.view.ui.adapter.viewholder.creator.ViewHolderInterface
+import gencana.com.android.githubsearch.view.adapter.RecyclerMultiAdapter
+import gencana.com.android.githubsearch.view.adapter.viewholder.creator.ViewHolderInterface
 
 fun <E: ViewHolderInterface> RecyclerView.defaultMultiAdapter(
         hasClickListener: Boolean = true,

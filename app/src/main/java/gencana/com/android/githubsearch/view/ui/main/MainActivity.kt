@@ -11,7 +11,7 @@ import gencana.com.android.githubsearch.common.extensions.isVisible
 import gencana.com.android.githubsearch.common.model.PagingListModel
 import gencana.com.android.githubsearch.common.model.SearchParams
 import gencana.com.android.githubsearch.common.model.UserModel
-import gencana.com.android.githubsearch.view.ui.adapter.RecyclerMultiAdapter
+import gencana.com.android.githubsearch.view.adapter.RecyclerMultiAdapter
 import gencana.com.android.githubsearch.view.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 

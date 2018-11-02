@@ -1,4 +1,4 @@
-package gencana.com.android.githubsearch.data.remote.paging
+package gencana.com.android.githubsearch.view.adapter.paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource

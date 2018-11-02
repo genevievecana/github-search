@@ -1,14 +1,14 @@
-package gencana.com.android.githubsearch.view.ui.adapter
+package gencana.com.android.githubsearch.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import gencana.com.android.githubsearch.data.remote.paging.getDiffCallback
+import gencana.com.android.githubsearch.view.adapter.paging.getDiffCallback
 
-import gencana.com.android.githubsearch.view.ui.adapter.viewholder.creator.ViewHolderEnum
-import gencana.com.android.githubsearch.view.ui.adapter.viewholder.creator.ViewHolderInterface
+import gencana.com.android.githubsearch.view.adapter.viewholder.creator.ViewHolderEnum
+import gencana.com.android.githubsearch.view.adapter.viewholder.creator.ViewHolderInterface
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
