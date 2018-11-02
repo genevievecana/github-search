@@ -25,7 +25,7 @@ fun<T: PagingListModel<M>, M> getPagingLiveData(
 
 fun getDefaultPageListConfiguration(pageSize: Int, prefetch: Int = 30) : PagedList.Config
         = PagedList.Config.Builder()
-        .setEnablePlaceholders(false)
+        .setEnablePlaceholders(true)
         .setPageSize(pageSize)
         .setPrefetchDistance(prefetch)
         .build()

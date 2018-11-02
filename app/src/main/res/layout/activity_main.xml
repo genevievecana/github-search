@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ui.main.MainActivity"
+    android:paddingStart="@dimen/xsmall"
+    android:paddingEnd="@dimen/xsmall"
     >
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -17,6 +19,8 @@
             android:id="@+id/recycler_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="@dimen/xsmall"
+            android:clipToPadding="false"
             />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
